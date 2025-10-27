@@ -128,6 +128,7 @@ void write_as_hex(unsigned char* s, unsigned int n, FILE* outfile) {
 }
 
 unsigned int write_uniques(unsigned char* sorted, unsigned int sorted_size, unsigned int element_size,  FILE* outfile, int write_binary) {
+    printf("%d\n", write_binary);
     if (sorted_size > 0) {
         if (write_binary) {
             fwrite(sorted, element_size, 1, outfile);
@@ -223,13 +224,17 @@ int main(int argc, char *argv[]) { // TODO: make some of these into options for 
         SWAP_BUFS(buf_a, buf_b);
     }
 
-    printf("Done!\n");
+    printf("Gnome Sorting...\n");
 
     // Gnome sort total
     int swaps = gnome_sort(buf_a, buf_size, element_size);  // should probably do this within partitions, not globally. Also can be parallelized, but not the bottleneck.
+    
+    printf("Writing Unique Values...\n");
 
     // Writing total
     write_uniques(buf_a, buf_size, element_size, out, write_binary);  // io bottleneck. Roguhly 50% time spent writing results to disk. Maybe this is not avoidable.
+
+    printf("Done!\n");
 
     free(buf_a);
     free(buf_b);
