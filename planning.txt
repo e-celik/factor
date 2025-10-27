@@ -1,0 +1,3 @@
+main:
+    hist over everything with first byte
+    run through base offsets, and create partition whenever offset > optimal size of offset, which is num_elements/num_partitions. remember to save partition size. result will be data structures containing ptr to partition, and partition size for all partitions
